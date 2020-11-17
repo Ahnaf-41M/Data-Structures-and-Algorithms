@@ -1,90 +1,83 @@
 /*Distinct elements in a range [L..R]*/
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include <ext/rope>
 
-#define ll  long long
-#define rep(i,n)        for(int i = 0; i < n; i++)
-#define IOS ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+#define  pb   push_back
+#define  ll   long long
+#define  endl "\n"
+#define  MX   200005
+
+#define  W(t)            while(t--)
+#define  gcd(a,b)        __gcd(a,b)
+#define  lcm(a,b)        (a*b)/gcd(a,b)
+#define  rep(i,a,b)      for(ll i = a; i <= b; i++)
+
 using namespace std;
-#define mx 600000
+using namespace __gnu_cxx;
 
-int ans[mx];
-vector<int> a;
-vector<pair<int, int> > Query;
-map<pair<int, int>, int > ind;
-const int block = 707;
-int n, q;
-
-int AnswerQueries()
+struct Query
 {
-     map<int, int> freq;
-     int curR = 0, curL = 0, curUnq = 0;
-     for (int i = 0; i < Query.size(); i++)
-     {
-          int L = Query[i].ff;
-          int R = Query[i].ss;
+   int L, R, indx;
+};
+int a[30005], freq[1000005], ans[MX];
+Query Q[MX];
+int n, q, unq;
+const int block = 700;
 
-          while (curL < L)
-          {
-               freq[a[curL]]--;
-               if (!freq[a[curL]])
-                    curUnq--;
-               curL++;
-          }
-          while (curL > L)
-          {
-               freq[a[curL - 1]]++;
-               if (freq[a[curL - 1]] == 1)
-                    curUnq++;
-               curL--;
-          }
-          while (curR <= R)
-          {
-               freq[a[curR]]++;
-               if (freq[a[curR]] == 1)
-                    curUnq++;
-               curR++;
-          }
-          while (curR > R + 1)
-          {
-               freq[a[curR - 1]]--;
-               if (!freq[a[curR - 1]])
-                    curUnq--;
-               curR--;
-          }
-          ans[ind[ {L, R}]] = curUnq;
-
-     }
-     for (int i = 0; i < q; i++)
-          cout << ans[i] << endl;
+bool cmp(Query a, Query b)
+{
+   if (a.L / block != b.L / block)
+      return a.L < b.L;
+   return a.R < b.R;
 }
-bool cmp(pair<int, int> p1, pair<int, int> p2)
+void Add(int pos)
 {
-     if (p1.ff / block != p2.ff / block)
-          return p1.ff / block < p2.ff / block;
-     else
-          p1.ss < p2.ss;
+   freq[a[pos]]++;
+   if (freq[a[pos]] == 1)
+      unq++;
+}
+void Remove(int pos)
+{
+   freq[a[pos]]--;
+   if (!freq[a[pos]])
+      unq--;
+}
+void AnswerQuery()
+{
+   int cur_L = 0, cur_R = -1;
+
+   rep(i, 0, q - 1)
+   {
+      int left = Q[i].L;
+      int right = Q[i].R;
+
+      while (cur_L > left)
+         cur_L--, Add(cur_L);
+      while (cur_R < right)
+         cur_R++, Add(cur_R);
+
+      while (cur_L < left)
+         Remove(cur_L), cur_L++;
+      while (cur_R > right)
+         Remove(cur_R), cur_R--;
+
+      ans[Q[i].indx] = unq;
+   }
+   rep(i, 0, q - 1) cout << ans[i] << endl;
 }
 int main()
 {
-     IOS
-     int i;
-     cin >> n >> q;
+   ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+   cin >> n;
+   rep(i, 0, n - 1) cin >> a[i];
 
-     rep(i, n) {
-          int x; cin >> x;
-          a.pb(x);
-     }
-     int k = 0;
-     rep(i, q)
-     {
-          int l, r; cin >> l >> r;
-          l--, r--;
-          Query.pb({l, r});
-          ind[ {l, r}] = k++;
-     }
-     sort(Query.begin(), Query.end(), cmp);
-     AnswerQueries();
+   cin >> q;
+   rep(i, 0, q - 1) {
+      cin >> Q[i].L >> Q[i].R;
+      Q[i].indx = i; Q[i].L--, Q[i].R--;
+   }
 
-     return 0;
+   sort(Q, Q + q, cmp);
+   AnswerQuery();
+   return 0;
 }
-
