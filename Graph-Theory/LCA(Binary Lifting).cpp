@@ -58,7 +58,7 @@ void init()
 	sz = log2(n);
 	LCA.assign(n + 1, vector<int>(sz + 1));
 	for (int i = 0; i <= n; i++)
-		for (int j = 0; j < sz; j++)
+		for (int j = 0; j <= sz; j++)
 			LCA[i][j] = -1;
 
 	for (int i = 0; i < m; ++i)
