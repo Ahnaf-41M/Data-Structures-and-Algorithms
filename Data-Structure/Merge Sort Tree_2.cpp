@@ -1,4 +1,4 @@
-/*k'th element in the range l to r.*/
+/*k'th element in the range from l to r.*/
 #include <bits/stdc++.h>
 #define  MX         100005
 #define  ff         first
