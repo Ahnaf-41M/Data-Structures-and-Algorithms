@@ -45,8 +45,8 @@ void pre_process()
 }
 int main()
 {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	//freopen("input.txt", "r", stdin);
+	//freopen("output.txt", "w", stdout);
 
 	cin >> n >> m;
 	for (int i = 0; i < n; i++) {
