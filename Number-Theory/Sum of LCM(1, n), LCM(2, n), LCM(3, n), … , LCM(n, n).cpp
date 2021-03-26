@@ -1,4 +1,3 @@
-// C++ implementation of the approach
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -12,9 +11,7 @@ vector<int> sum;
 void ETF()
 {
     for (int i = 1; i <= n; i++)
-    {
         phi[i] = i;
-    }
 
     for (int i = 2; i <= n; i++)
     {
@@ -28,8 +25,6 @@ void ETF()
         }
     }
 }
-
-// Function to return the required LCM sum
 void LcmSum()
 {
 
@@ -43,16 +38,11 @@ void LcmSum()
             ans[j] += (i * phi[i]);
         }
     }
-
-    /*ll answer = ans[m];
-    answer = (answer + 1) * m;
-    answer = answer / 2;
-    return answer; */
 }
 
 int main()
 {
-    int m=5,t;
+    int m = 5, t;
     ll answer;
     ETF();
     LcmSum();
@@ -60,8 +50,7 @@ int main()
     answer = ans[m];
     answer = (answer + 1) * m;
     answer = answer / 2;
-    cout<<answer<<endl;
-
+    cout << answer << endl;
 
     return 0;
 }
