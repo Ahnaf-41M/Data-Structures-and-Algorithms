@@ -2,53 +2,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 100001
+#define int long long
 
-// phi[i] stores euler totient function for i result[j] stores result for value j
-long long phi[MAX], result[MAX];
+int phi[MAX + 5], result[MAX + 5];
 
-// Precomputation of phi[] numbers
 void computeTotient()
 {
-    phi[1] = 1;
-    for (int i=2; i<MAX; i++)
-    {
-        if (!phi[i])
-        {
-            phi[i] = i-1;
-            for (int j = (i<<1); j<MAX; j+=i)
-            {
-                if (!phi[j])
-                    phi[j] = j;
-                phi[j] = (phi[j]/i)*(i-1);
-            }
-        }
-    }
+   for (int i = 1; i <= MAX; i++)
+      phi[i] = i;
+   for (int i = 2; i <= MAX; i++)
+      if (phi[i] == i)
+         for (int j = i; j <= MAX; j += i)
+            phi[j] -= phi[j] / i;
 }
-// Precomputes result for all numbers till MAX
 void sumOfGcdPairs()
-{
-    // Precompute all phi value
-    computeTotient();
-    for (int i=1; i<MAX; ++i)
-    {
-        // Iterate through all the divisors of i.
-        for (int j=2; i*j<MAX; ++j)
-            result[i*j] += i*phi[j];
-    }
-    // Add summation of previous calculated sum
-    for (int i=2; i<MAX; i++)
-        result[i] += result[i-1];
+{   
+   for (int i = 1; i <= MAX; i++) {
+      /* If d is a divisorof N, then the number of pairs (a,N),
+      where (1<=a<=N), such that GCD(a, N) = d is phi[N/d]. */
+      for (int j = 2*i; j <= MAX; j += i) {
+         result[j] += i * phi[j / i];
+      }
+   }
+   // Add summation of previous calculated sum
+   for (int i = 2; i <= MAX; i++)
+      result[i] += result[i - 1];
 }
-int main()
+signed main()
 {
-    // Function to calculate sum of all the GCD pairs
-    sumOfGcdPairs();
+   computeTotient();
+   sumOfGcdPairs(); // Function to calculate sum of all the GCD pairs
 
-    int N = 4;
-    cout << "Summation of " << N << " = " << result[N] << endl;;
-    N = 12;
-    cout << "Summation of " << N << " = "  << result[N] << endl;
-    N = 5000;
-    cout << "Summation of " << N << " = "<< result[N] ;
+   int N = 4;
+   cout << "Summation of " << N << " = " << result[N] << endl;;
+   N = 12;
+   cout << "Summation of " << N << " = "  << result[N] << endl;
+   N = 5000;
+   cout << "Summation of " << N << " = " << result[N] ;
 }
-
