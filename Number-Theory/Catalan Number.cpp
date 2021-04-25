@@ -1,8 +1,7 @@
-/*For the nth Catalan number = [ (2*n)!/(n+1)*n! ].. O(n) solve*/
-#include<iostream>
+/*For the nth Catalan number = [ (2nCn)/(n+1) ].. O(n) solve*/
+#include<bits/stdc++.h>
 using namespace std;
 
-// Returns value of Binomial Coefficient C(n, k)
 unsigned long int binomialCoeff(unsigned int n, unsigned int k)
 {
     unsigned long int res = 1;
@@ -19,12 +18,10 @@ unsigned long int binomialCoeff(unsigned int n, unsigned int k)
     }
     return res;
 }
-// A Binomial coefficient based function to find nth catalan number in O(n) time
 unsigned long int catalan(unsigned int n)
 {
-    // Calculate value of 2nCn
-    unsigned long int c = binomialCoeff(2*n, n);
-    return c/(n+1);
+    unsigned long int c = binomialCoeff(2 * n, n); //2nCn
+    return c / (n + 1); //(2nCn)/(n+1)
 }
 
 int main()
