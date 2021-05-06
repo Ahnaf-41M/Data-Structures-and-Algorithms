@@ -49,15 +49,15 @@ void Update(int node, int b, int e, int ind, int prv, int now)
 {
    if (b > ind || e < ind) return;
    if (b == ind && e == ind) {
-      segTree[node].erase(segTree[node].find({prv, ind}));
-      segTree[node].insert({now, ind});
+      segTree[node].erase(segTree[node].find({prv, ind})); //erase old value
+      segTree[node].insert({now, ind}); //insert new value
       return;
    }
    int left = node << 1;
    int right = left + 1;
    int mid = (b + e) >> 1;
-   segTree[node].erase(segTree[node].find({prv, ind}));
-   segTree[node].insert({now, ind});
+   segTree[node].erase(segTree[node].find({prv, ind})); //erase old value
+   segTree[node].insert({now, ind}); //insert new value
 }
 signed main()
 {
