@@ -10,31 +10,25 @@ vector<PII> graph[MAX];
 ll prims(ll x)
 {
    priority_queue<PII, vector<PII>, greater<PII> > Q;
-   ll minCost = 0, y;
-   PII p;
+   ll minCost = 0;
 
    Q.push({0, x});
 
    while (!Q.empty())
    {
-      p = Q.top();
+      auto cur = Q.top();
       Q.pop();
 
-      x = p.second;
+      x = cur.second;
 
-      if (visited[x])
-         continue;
+      if (visited[x]) continue;
 
       visited[x] = true;
-      minCost += p.first;
+      minCost += cur.first;
 
-      for (int i = 0; i < graph[x].size(); i++)
-      {
-         y = graph[x][i].second;
-
-         if (!visited[y])
-            Q.push(graph[x][i]);
-      }
+      for (auto ch : graph[x])
+         if (!visited[ch.second])
+            Q.push(ch);
    }
    return minCost;
 }
@@ -59,4 +53,3 @@ int main()
    minc = prims(stnode);
    cout << minc << endl;
 }
-
