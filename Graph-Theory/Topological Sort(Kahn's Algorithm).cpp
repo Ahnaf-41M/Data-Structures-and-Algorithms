@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-vector<int> res, adj[100];
-int indeg[100];
+#define MX 100005
+vector<int> res, adj[MX];
+int indeg[MX];
 int n, m;
 
 void Kahn()
