@@ -1,30 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-int t;
+#define MX 100005
 int n, m;
-int cost[11000];
-vector<int>v[100005];
+int cost[MX], parent[MX];
+vector<int> adj[MX];
 
-void bfs(int parent[])
+void bfs()
 {
-   queue<int>q;
+   queue<int> q;
    q.push(1);
    cost[1] = 0;
    parent[1] = -1;
    while (!q.empty())
    {
-      int idx = q.front();
-
+      int cur = q.front();
       q.pop();
-      for (int i = 0; i < v[idx].size(); i++)
-      {
-         int y = v[idx][i];
-         if (cost[y] == -1)
-         {
-            q.push(y);
-            cost[y] = cost[idx] + 1;
-            parent[y] = idx;
+
+      for (int ch : adj[cur]) {
+         if (cost[ch] == -1) {
+            q.push(ch);
+            cost[ch] = cost[cur] + 1;
+            parent[ch] = cur;
          }
       }
    }
@@ -32,23 +28,16 @@ void bfs(int parent[])
 
 int main()
 {
-   cin >> t;
-   while (t--)
-   {
-      memset(cost, -1, sizeof cost);
 
-      scanf("%d%d", &n, &m);
-      int parent[n + 1] = {0};
+   memset(cost, -1, sizeof cost);
 
-      for (int i = 0; i < m; i++)
-      {
-         int x, y;
-         scanf("%d%d", &x, &y);
-         v[x].push_back(y);
-         v[y].push_back(x);
-      }
-      bfs(parent);
+   cin >> n >> m;
+
+   for (int i = 0; i < m; i++) {
+      int x, y;
+      cin >> x >> y;
+      adj[x].push_back(y);
+      adj[y].push_back(x);
    }
-
+   bfs();
 }
-
