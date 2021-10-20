@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-vector<int> adj[10006];
-bool vis[10005];
-int low[10005], disc[10005], AP[10005];
+#define MX 100005
+vector<int> adj[MX];
+bool vis[MX];
+int low[MX], disc[MX], AP[MX];
 
 void DFS(int nd, int par)
 {
