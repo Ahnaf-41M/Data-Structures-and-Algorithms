@@ -50,7 +50,7 @@ signed main()
 
     cin >> q;
     while (q--) {
-        int l, r; //sum of elements from 1 to m
+        int l, r;
         cin >> l >> r;
         cout << tree1.query(l, r) << "\n";
     }
