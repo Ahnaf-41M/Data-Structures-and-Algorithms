@@ -42,8 +42,6 @@ public:
 int main()
 {
 	linked_list L;
-
-	int t, n, pos, x;
 	L.insert(0, 5);
 	L.insert(1, 2);
 	L.insert(2, 7);
