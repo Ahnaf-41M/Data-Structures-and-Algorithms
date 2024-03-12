@@ -6,14 +6,13 @@ int Partition(int a[], int l, int h)
     int i = l, j = h;
     int pivot = a[l]; //picking the first element as pivot
 
-    do {
-
+    while (i < j) {
         while ( a[i] <= pivot ) i++; //if the i'th element is less than or equal
         while ( a[j] > pivot ) j--; //if the j'th element is greater
 
         if (i < j)
             swap(a[i], a[j]);
-    } while ( i < j );
+    }
 
     swap(a[l], a[j]);
     return j;
